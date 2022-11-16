@@ -1,20 +1,4 @@
-// custom server for communicating with the API
-//https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com
-//   endpoint like this: https://financialmodelingprep.com/api/v3/profile/AAPL?apikey=some_api
-//  look like this:
-// https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/profile/AAPL
-
-//test field
-//document.getElementsByClassName("spinner-border").display = "none";
-//TheSpinnerBorder.style.display = "none";
-//TheSpinnerBorder.style.visibility = "visible"
-
-// var a = document.createElement('a');
-// var linkText = document.createTextNode("my title text");
-// a.appendChild(linkText);
-// a.title = "my title text";
-// a.href = "http://example.com";
-// document.body.appendChild(a);
+console.log("start index code");
 
 // The search Spinner inside the button
 TheSpinnerBorder = document.getElementById("spinner-border");
@@ -22,18 +6,14 @@ TheSpinnerBorder.style.display = "none";
 // The search icon inside the button
 buttonIcon = document.getElementById("button-icon");
 
-// testItem = document.getElementById("test-item");
-// testItem.innerHTML = "  changed!";
-// testItem.append;
-
-// const link = document.createElement("a");
-// link.id = "someLink"; //give it an ID!
-// link.href = "https://example.com"; // Your URL
-
 //end of test field
 
 let data;
 let getDataOut;
+let getDataOut2;
+let ResultLine;
+let getDATAfromTheBigFile;
+let putAsymbol;
 
 //this is the search-field
 searchField = document.getElementById("search-field");
@@ -54,13 +34,13 @@ function searchButtonfunction() {
   TheSpinnerBorder.style.display = "inline-block";
   // call the function to remove all previus results
   removeAllChildNodes(resultsList);
-
   console.log(searchField.value);
-  URL =
+
+  URLforSEARCH =
     "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=" +
     searchField.value +
     "&limit=10&exchange=NASDAQ";
-  fetch1(URL);
+  fetch1(URLforSEARCH);
 }
 
 // remove all previus results
@@ -69,8 +49,6 @@ function removeAllChildNodes(parent) {
     parent.removeChild(parent.firstChild);
   }
 }
-
-let ResultLine;
 
 function insertTheResultsToDom() {
   console.log("get results from fetch to the innerhtml");
@@ -86,53 +64,61 @@ function insertTheResultsToDom() {
   for (let i = 0; i < getDataOut.length; i++) {
     getDataOut[i] + "<br>";
 
-    // var a = document.createElement('a');
-    // var linkText = document.createTextNode("my title text");
-    // a.appendChild(linkText);
-    // a.title = "my title text";
-    // a.href = "http://example.com";
-    // document.body.appendChild(a);
+    ///////////////////////////
+    async function fetchNO2(URL) {
+      try {
+        const response = await fetch(URL);
+        const data2 = await response.json();
+        // console.log("fetchNO2 from URL for DETAILS ", data);
+        getDataOut2 = data2;
+        ResultLine = document.createElement("a");
 
-    // console.log(getDataOut[i]);
-    //ResultLine = document.createElement("a");
-    // hr = document.createElement("hr");
-    // resultsList.appendChild(hr);
-    ResultLine = document.createElement("a");
-    ResultLine.href = "http://www." + getDataOut[i]["name"] + ".com";
-    ResultLine.setAttribute("class", "ResultLine");
-    // ResultLine.style.display = "inline-block";
-    resultsList.appendChild(ResultLine);
-    ResultLine.textContent = `${getDataOut[i]["name"]}  (${getDataOut[i]["symbol"]})`;
+        //נתוני מניה לרשימה
+        ResultStockCancge = document.createElement("p");
+        ResultStockCancge.setAttribute("class", "ResultStockCancge");
+        ResultStockCancge.textContent = `${getDataOut2["profile"]["changesPercentage"]}`;
+
+        if (`${getDataOut2["profile"]["changesPercentage"]}` > 0) {
+          console.log(" is positive --> make it green");
+          ResultStockCancge.classList.add("positiveValue");
+        } else {
+          console.log(" is negative --> make it red");
+          ResultStockCancge.classList.add("negativeValue");
+        }
+
+        // שורות בתוצאות הרשימה
+        ResultLine.href = `company.html?symbol=${getDataOut[i]["symbol"]}`;
+        ResultLine.setAttribute("class", "ResultLine");
+        ResultLine.textContent = `${getDataOut[i]["name"]}  (${getDataOut[i]["symbol"]})`;
+
+        // תמונה קטנה
+        ResultLineIMG = document.createElement("img");
+        ResultLineIMG.setAttribute("class", "ResultLineIMG");
+        ResultLineIMG.src = getDataOut2["profile"]["image"];
+
+        resultsList.appendChild(ResultLine);
+        ResultLine.prepend(ResultLineIMG);
+        ResultLine.append(ResultStockCancge);
+
+        return getDataOut2;
+      } catch (err) {
+        console.error(err);
+        return { todos: [] };
+      }
+    }
+
+    fetchNO2(
+      `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${getDataOut[i]["symbol"]}`
+    );
   }
 }
-
-let URL =
-  "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=AA&limit=10&exchange=NASDAQ";
-
-// --- old fetch --------------
-// async function fetch1(giveMeURL) {
-//   fetch(giveMeURL)
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log("this is the fetch data ", data);
-//       console.log(data[0]);
-//       return data;
-//     })
-//     .catch((err) => {
-//       // Will come here if there is an error in one of the promises
-//       console.log("fetch Error");
-//     });
-// }
 
 async function fetch1(URL) {
   try {
     const response = await fetch(URL);
     const data = await response.json();
     console.log("this is the fetch data ", data);
-    // console.log(data);
-    // console.log(data[0]);
+    console.log("fetch from URLforSEARCH");
     getDataOut = data;
     insertTheResultsToDom(getDataOut);
     return data;
@@ -141,8 +127,9 @@ async function fetch1(URL) {
     return { todos: [] };
   }
 }
-// fetch1(URL).then((todos) => {
-//   console.log(todos);
-// });
 
-console.log("end of code2");
+// fetch1(URLforSEARCH).then((todos) => {});
+// fetch1(URLfordDETAILS).then((todos) => {});
+//  fetchNO2(URLfordDETAILS);
+console.log("test");
+console.log("end index code");

@@ -11,14 +11,51 @@
 .ResultLine {
   /* background-color: rgb(238, 255, 0); */
   align-self: flex-start;
-  margin-bottom: 8px;
+  margin: 0 0 19px 0;
   text-decoration: none;
+  align-items: center;
+  display: flex;
+}
+
+.ResultStockCancge {
+  align-self: flex-start;
+  align-self: center;
+  color: rgb(124, 124, 124);
+  font-size: 12px;
+  margin: 0 0 0 15px;
 }
 
 .resultsList {
   /* background-color: rgb(241, 241, 241); */
   display: flex;
   flex-direction: column;
+}
+
+.ResultLineIMG {
+  height: 35px;
+  width: 35px;
+  margin-right: 15px;
+}
+
+.make-me-flexy {
+  display: flex;
+
+  align-items: center;
+  margin: 0px;
+}
+
+.positiveValue {
+  color: rgb(0, 204, 0);
+  margin-left: 7px;
+}
+
+.negativeValue {
+  color: rgb(255, 0, 0);
+  margin-left: 7px;
+}
+
+#company-image {
+  height: 55px;
 }
 
 .lds-ellipsis {
