@@ -1,24 +1,21 @@
-// Create element:
-console.log("start marquee file");
+console.log("start marquee JS");
 
 const theTikkerBG = document.createElement("div");
 theTikkerBG.setAttribute("class", "theTikkerBG");
-document.body.prepend(theTikkerBG);
+// document.body.prepend(theTikkerBG);
+marquee.appendChild(theTikkerBG);
 
 const Tikker = document.createElement("ul");
 theTikkerBG.prepend(Tikker);
 Tikker.setAttribute("class", "theTikker");
-// Tikker.innerText = "This is a paragraphhhhh.";
 
 async function fetchNO2(URL) {
   try {
     const response = await fetch(URL);
     const data2 = await response.json();
     getDataOut2 = data2;
-    //   console.log(getDataOut2["0"] );
-    //   console.log(getDataOut2.length );
+    //   console.log(getDataOut2.length );     //   console.log(getDataOut2["0"] );
     //   console.log(getDataOut2[i].symbol);
-
     getDataOut2.length = 28; //  הגבלתי את רשימת הפריטים-
     for (let i = 0; i < getDataOut2.length; i++) {
       fetchNO3(

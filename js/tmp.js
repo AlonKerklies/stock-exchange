@@ -23,3 +23,8 @@
 //   new programmer ("jon", 55 , 12),
 //   new programmer ("don", 35 , 2)
 // ];
+
+(async function (){
+const marquee =  new Marquee (document.createElementById('marquee'));
+marquee.load();
+})
