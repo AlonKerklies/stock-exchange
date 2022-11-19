@@ -142,11 +142,17 @@
 
 .TikkerSymbol {
   font-size: 13px;
-
   color: rgb(197, 197, 197);
   margin: 0 0 0 0px;
   list-style-type: none;
 }
+
+/* .TikkerSymbol3 {
+  font-size: 13px;
+  color: rgb(255, 0, 221);
+  margin: 0 0 0 0px;
+  list-style-type: none;
+} */
 
 /* .marquee div {
   display: block;

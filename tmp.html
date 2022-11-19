@@ -9,79 +9,86 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
-    <title>My Chart.js Chart</title>
+    <title>tmp</title>
   </head>
   <body>
-    <div class="container">
-      <canvas id="myChart"></canvas>
-    </div>
-
+ <p>tmp files</p>
     <script>
-      let myChart = document.getElementById("myChart").getContext("2d");
+ 
+ console.log("tmp files");
 
-      // Global Options
-      Chart.defaults.global.defaultFontFamily = "Lato";
-      Chart.defaults.global.defaultFontSize = 18;
-      Chart.defaults.global.defaultFontColor = "#777";
 
-      let massPopChart = new Chart(myChart, {
-        type: "bar", // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-        data: {
-          labels: [
-            "Boston",
-            "Worcester",
-            "Springfield",
-            "Lowell",
-            "Cambridge",
-            "New Bedford",
-          ],
-          datasets: [
-            {
-              label: "Population",
-              data: [617594, 181045, 153060, 106519, 105162, 95072],
-              //backgroundColor:'green',
-              backgroundColor: [
-                "rgba(255, 99, 132, 0.6)",
-                "rgba(54, 162, 235, 0.6)",
-                "rgba(255, 206, 86, 0.6)",
-                "rgba(75, 192, 192, 0.6)",
-                "rgba(153, 102, 255, 0.6)",
-                "rgba(255, 159, 64, 0.6)",
-                "rgba(255, 99, 132, 0.6)",
-              ],
-              borderWidth: 1,
-              borderColor: "#777",
-              hoverBorderWidth: 3,
-              hoverBorderColor: "#000",
-            },
-          ],
-        },
-        options: {
-          title: {
-            display: true,
-            text: "Largest Cities In Massachusetts",
-            fontSize: 25,
-          },
-          legend: {
-            display: true,
-            position: "right",
-            labels: {
-              fontColor: "#000",
-            },
-          },
-          layout: {
-            padding: {
-              left: 50,
-              right: 0,
-              bottom: 0,
-              top: 0,
-            },
-          },
-          tooltips: {
-            enabled: true,
-          },
-        },
-      });
+
+
+class Person {
+    constructor(_name,_age){
+    this.name = _name;
+    this.age = _age;}
+
+  decribe () {
+  console.log(`my name: ${this.name} and my age is ${this.age}`);}
+
+}
+
+class programmer extends Person {
+        constructor(_name,_age,_yearOfExperience){
+        super(_name,_age);
+        this.yearOfExperience = _yearOfExperience;
+        }
+
+        code () { 
+        console.log(`${this.name} is doing this thing`);
+        }
+}
+
+
+
+ let person1 = new Person(`jeff`, 45);
+ let programmer1 = new programmer(`doni`,55,12);
+
+ programmer1.code();
+ programmer1.decribe();
+
+
+
+ console.log(person1);
+ console.log(programmer1);
+
+function dosomething(programmer){
+
+}
+
+
+
+
+let x =1
+let y = 2
+let z = (x < y) ? "ass" : "alon"
+console.log(z)
+
+
+
+    
+
+
+
+   
+// } ;
+
+// const programmer = [
+//   new programmer ("jon", 55 , 12),
+//   new programmer ("don", 35 , 2)
+// ];
+
+
+
+
+
+
+
+
+
+ 
     </script>
   </body>
 </html>

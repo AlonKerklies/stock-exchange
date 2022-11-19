@@ -9,8 +9,6 @@ const Tikker = document.createElement("ul");
 theTikkerBG.prepend(Tikker);
 Tikker.setAttribute("class", "theTikker");
 // Tikker.innerText = "This is a paragraphhhhh.";
-//  Tikker.setAttribute("theTikker");
-// Append to body:
 
 async function fetchNO2(URL) {
   try {
@@ -19,11 +17,10 @@ async function fetchNO2(URL) {
     getDataOut2 = data2;
     //   console.log(getDataOut2["0"] );
     //   console.log(getDataOut2.length );
-    // ------------ הגבלתי את רשימת הפריטים-    -----
-    getDataOut2.length = 28;
-    for (let i = 0; i < getDataOut2.length; i++) {
-      //   console.log(getDataOut2[i].symbol);
+    //   console.log(getDataOut2[i].symbol);
 
+    getDataOut2.length = 28; //  הגבלתי את רשימת הפריטים-
+    for (let i = 0; i < getDataOut2.length; i++) {
       fetchNO3(
         `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${getDataOut2[i].symbol}`
       );
@@ -46,27 +43,48 @@ async function fetchNO3(URL) {
   try {
     const response = await fetch(URL);
     const data3 = await response.json();
-    // console.log("fetchNO2 from URL for DETAILS ", data);
     getDataOut3 = data3;
-    // console.log(getDataOut3.profile.changesPercentage);
-    // console.log(getDataOut3.symbol);
-    TikkerSymbol = document.createElement("li");
-    TikkerSymbol.innerText = getDataOut3.symbol;
-    TikkerSymbol.setAttribute("class", "TikkerSymbol");
-    Tikker.appendChild(TikkerSymbol);
 
-    Tikkerprcent = document.createElement("li");
-    Tikkerprcent.innerText = getDataOut3.profile.changesPercentage;
-    Tikkerprcent.setAttribute("class", "Tikkerprcent");
-    Tikker.appendChild(Tikkerprcent);
+    //////////////////////////////////////////////////////////////////////////////////////
 
-    if (`${getDataOut3.profile.changesPercentage}` > 0) {
-      console.log(" is positive --> make it green");
-      Tikkerprcent.classList.add("positiveValue");
-    } else {
-      console.log(" is negative --> make it red");
-      Tikkerprcent.classList.add("negativeValue");
+    let SYMBOLElementToTikker;
+    let PRECENTementToTikker;
+
+    class makeElementToTikker {
+      constructor(_thesymbol, _precent, _SYMBOLclass, _PRECENTclass) {
+        this.symbol = _thesymbol;
+        this.precent = _precent;
+        this.SYMBOLclass = _SYMBOLclass;
+        this.PRECENTclass = _PRECENTclass;
+      }
+
+      MakeIt() {
+        SYMBOLElementToTikker = document.createElement("li");
+        SYMBOLElementToTikker.innerText = `${this.symbol}`;
+        SYMBOLElementToTikker.classList.add(`${this.SYMBOLclass}`);
+        PRECENTementToTikker = document.createElement("li");
+        PRECENTementToTikker.innerText = `${this.precent}`;
+        PRECENTementToTikker.classList.add(`${this.PRECENTclass}`);
+        Tikker.appendChild(PRECENTementToTikker);
+        Tikker.appendChild(SYMBOLElementToTikker);
+      }
+
+      MinusPlusCOLORS() {
+        `${this.precent}` < 0
+          ? PRECENTementToTikker.classList.add("negativeValue")
+          : PRECENTementToTikker.classList.add("positiveValue");
+      }
     }
+
+    let theTikkerSymbol2 = new makeElementToTikker(
+      getDataOut3.symbol,
+      getDataOut3.profile.changesPercentage,
+      ("class", "TikkerSymbol"),
+      ("class", "Tikkerprcent")
+    );
+    theTikkerSymbol2.MakeIt();
+    theTikkerSymbol2.MinusPlusCOLORS();
+    ////////////////////////////////////////////////////////
 
     return getDataOut3;
   } catch (err) {
@@ -74,11 +92,3 @@ async function fetchNO3(URL) {
     return { todos: [] };
   }
 }
-
-// fetchNO3(
-//     `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${getDataOut[i]["symbol"]}`
-//     );
-
-// resultsList.appendChild(ResultLine);
-//         ResultLine.prepend(ResultLineIMG);
-//         ResultLine.append(ResultStockCancge);
