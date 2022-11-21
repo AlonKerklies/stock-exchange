@@ -7,6 +7,11 @@
     background-color: rgb(0, 255, 21)
 }; 
 */
+/* 
+#search-items{
+  display: flex;
+} */
+
 
 .ResultLine {
   /* background-color: rgb(238, 255, 0); */
@@ -14,7 +19,7 @@
   margin: 0 0 19px 0;
   text-decoration: none;
   align-items: center;
-  display: flex;
+  display: inline ;
 }
 
 .ResultStockCancge {
@@ -147,6 +152,28 @@
   list-style-type: none;
 }
 
+
+
+#test1{
+width: 83px;
+height: 83px;
+background-color: rgb(0, 255, 34);
+  border: 2px solid rebeccapurple 
+}
+
+.test1{
+  width: 83px;
+  height: 83px;
+  background-color: rgb(0, 255, 34);
+    border: 2px solid rebeccapurple 
+  }
+
+  .test1{
+    width: 83px;
+    height: 83px;
+    background-color: rgb(38, 0, 255);
+      border: 2px solid rebeccapurple 
+    }
 /* .TikkerSymbol3 {
   font-size: 13px;
   color: rgb(255, 0, 221);
@@ -172,7 +199,7 @@
 
  
 
-
+ 
 
 
 

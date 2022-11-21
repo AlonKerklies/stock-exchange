@@ -1,174 +1,104 @@
 console.log("start SearchForm JS");
 
-// const theTikkerBG = document.createElement("div");
-
-// The search Spinner inside the button
-TheSpinnerBorder = document.getElementById("spinner-border");
-TheSpinnerBorder.style.display = "none";
-// The search icon inside the button
-buttonIcon = document.getElementById("button-icon");
-
-//end of test field
-
-let data;
-let getDataOut;
-let getDataOut2;
-let ResultLine;
-let getDATAfromTheBigFile;
-let putAsymbol;
-
-//this is the search-field
-searchField = document.getElementById("search-field");
-//this is the Results list
-resultsList = document.getElementById("results");
-resultsList.setAttribute("class", "resultsList");
-
-//this is the main serch button
-searchButton = document.getElementById("search-button");
-searchButton.addEventListener("click", searchButtonfunction);
-
-function searchButtonfunction() {
-  console.log("click in the main button");
-  //  remove the button icon
-  buttonIcon.style.display = "none";
-  //  display the Spinner
-  TheSpinnerBorder.style.display = "inline-block";
-  // call the function to remove all previus results
-  removeAllChildNodes(resultsList);
-  console.log(searchField.value);
-
-  URLforSEARCH =
-    "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=" +
-    searchField.value +
-    "&limit=10&exchange=NASDAQ";
-  fetch1(URLforSEARCH);
-}
-
-// remove all previus results
-function removeAllChildNodes(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
-}
-
 class SearchForm {
-  constructor(_thesymbol, _precent, _SYMBOLclass, _PRECENTclass) {
-    this.symbol = _thesymbol;
+  constructor(_thSearchForm, _precent, _SYMBOLclass, _PRECENTclass) {
+    // this.symbol = _thesymbol;
   }
 
-  MakeSerchField() {
-    let serchField = document.createElement("input");
-    serchField.setAttribute("id", "search-field");
-    serchField.setAttribute("class", "form-control");
+  onSearch(renderResults) {
 
-    // serchField.setAttribute("style", "display:none;");
-  }
+    const Spinner = document.createElement("span");
+    const DivSearchItems = document.createElement("div");
+    DivSearchItems.setAttribute("id", "search-items");
+    DivSearchItems.classList.add("input-group");
+    DivSearchItems.classList.add("mb-3");
+    form.appendChild(DivSearchItems);
 
-  MakePrimaryButton() {
-    PrimaryButton = document.createElement("button");
-    PrimaryButton.innerText = `go`;
-    PrimaryButton.setAttribute("id", "search-button");
-    PrimaryButton.setAttribute("type", "button");
-    PrimaryButton.classList.add("btn");
-    PrimaryButton.classList.add("btn-primary");
-    form.appendChild(PrimaryButton);
-  }
-}
-/////////////
-let PrimaryButton = new SearchForm();
-////////////////
-// PrimaryButton.MakePrimaryButton();
-////////////////////////
+    function searchButtonfunction() {
+      console.log("click in the main button");
+      Spinner.style.display = "inline-block";
+      //  function that clear all previus results
+      // removeAllChildNodes(resultsList);
 
-// let theTikkerSymbol2 = new makeElementToTikker(
-//   getDataOut3.symbol,
-//   getDataOut3.profile.changesPercentage,
-//   ("class", "TikkerSymbol"),
-//   ("class", "Tikkerprcent")
-// );
-// theTikkerSymbol2.MakeIt();
-// theTikkerSymbol2.MinusPlusCOLORS();
+      console.log(serchField.value);
 
-function insertTheResultsToDom() {
-  console.log("get results from fetch to the innerhtml");
-  console.log("the data length is " + getDataOut.length);
-  // console.log(getDataOut[0]["name"], "(" + getDataOut[0]["symbol"] + ")");
+      let URLforSEARCH =
+        "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=" +
+        serchField.value +
+        "&limit=10&exchange=NASDAQ";
+      console.log(URLforSEARCH);
 
-  //dont display the Spinner
-  TheSpinnerBorder.style.display = "none";
-  // display the button Icon
-  buttonIcon.style.display = "inline-block";
+      fetch1(URLforSEARCH);
+    }
 
-  //create elments from results
-  for (let i = 0; i < getDataOut.length; i++) {
-    getDataOut[i] + "<br>";
-
-    ///////////////////////////
-    async function fetchNO2(URL) {
+    async function fetch1(URL) {
       try {
         const response = await fetch(URL);
-        const data2 = await response.json();
-        // console.log("fetchNO2 from URL for DETAILS ", data);
-        getDataOut2 = data2;
-        ResultLine = document.createElement("a");
+        const data = await response.json();
+         
+        console.log("this is the companies from the form ", data);
+        let companies ;
+             for (let i = 0; i < data.length; i++) {
+    
+              companies=(data[i].symbol)
+              // console.log(companies)
+              renderResults(companies);
+              ;
+            
+            };
+            console.log(  "this is the arry of companies from SearchForm" +  companies);
 
-        //נתוני מניה לרשימה
-        ResultStockCancge = document.createElement("p");
-        ResultStockCancge.setAttribute("class", "ResultStockCancge");
-        ResultStockCancge.textContent = `${getDataOut2["profile"]["changesPercentage"]}`;
+        // const companiesstring = JSON.stringify(companies);
+        // console.log( "this is the stringify "+companiesstring);
 
-        if (`${getDataOut2["profile"]["changesPercentage"]}` > 0) {
-          console.log(" is positive --> make it green");
-          ResultStockCancge.classList.add("positiveValue");
-        } else {
-          console.log(" is negative --> make it red");
-          ResultStockCancge.classList.add("negativeValue");
-        }
+        
+        return companies;
 
-        // שורות בתוצאות הרשימה
-        ResultLine.href = `company.html?symbol=${getDataOut[i]["symbol"]}`;
-        ResultLine.setAttribute("class", "ResultLine");
-        ResultLine.textContent = `${getDataOut[i]["name"]}  (${getDataOut[i]["symbol"]})`;
-
-        // תמונה קטנה
-        ResultLineIMG = document.createElement("img");
-        ResultLineIMG.setAttribute("class", "ResultLineIMG");
-        ResultLineIMG.src = getDataOut2["profile"]["image"];
-
-        resultsList.appendChild(ResultLine);
-        ResultLine.prepend(ResultLineIMG);
-        ResultLine.append(ResultStockCancge);
-
-        return getDataOut2;
+        // return data;
       } catch (err) {
         console.error(err);
         return { todos: [] };
       }
     }
 
-    fetchNO2(
-      `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${getDataOut[i]["symbol"]}`
-    );
+    const serchField = document.createElement("input");
+    serchField.setAttribute("id", "search-field");
+    serchField.setAttribute("class", "form-control");
+    serchField.setAttribute("type", "text");
+    serchField.setAttribute("placeholder", "Search the Nasdaq");
+    serchField.setAttribute("aria-label", "Recipient's username");
+    serchField.setAttribute("aria-describedby", "basic-addon2");
+    serchField.classList.add("input-group");
+    DivSearchItems.appendChild(serchField);
+
+    const PrimaryButton = document.createElement("button");
+    PrimaryButton.addEventListener("click", searchButtonfunction);
+    // PrimaryButton.innerText = `go`;
+    PrimaryButton.setAttribute("id", "search-button");
+    PrimaryButton.setAttribute("type", "button");
+    PrimaryButton.classList.add("btn");
+    PrimaryButton.classList.add("btn-primary");
+    DivSearchItems.appendChild(PrimaryButton);
+
+    const buttonIcon = new Image(16, 16);
+    buttonIcon.src = "./images/search.svg";
+    PrimaryButton.appendChild(buttonIcon);
+
+    Spinner.classList.add("spinner-border");
+    Spinner.setAttribute("id", "spinner-border");
+    Spinner.setAttribute("role", "status");
+    Spinner.setAttribute("aria-hidden", "true");
+    Spinner.style.display = "inline-block";
+    Spinner.style.display = "none";
+    form.append(Spinner);
+
+    console.log("end of serchform class");
+
+
+    
   }
 }
 
-async function fetch1(URL) {
-  try {
-    const response = await fetch(URL);
-    const data = await response.json();
-    console.log("this is the fetch data ", data);
-    console.log("fetch from URLforSEARCH");
-    getDataOut = data;
-    insertTheResultsToDom(getDataOut);
-    return data;
-  } catch (err) {
-    console.error(err);
-    return { todos: [] };
-  }
-}
-
-// fetch1(URLforSEARCH).then((todos) => {});
-// fetch1(URLfordDETAILS).then((todos) => {});
-//  fetchNO2(URLfordDETAILS);
-console.log("test");
+// let onSearch1000 = new SearchForm();
+// onSearch1000.onSearch();
 console.log("end index code");
