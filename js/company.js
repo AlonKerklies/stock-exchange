@@ -1,6 +1,4 @@
 console.log("-------the company page----------");
-// console.log(window.location.search);
-// console.log(window.location);
 const KeyAndValueFromURL = window.location.search;
 // console.log("KEYS & VALUE:" ,KeyAndValueFromURL);
 const urlParams = new URLSearchParams(KeyAndValueFromURL);
@@ -26,34 +24,23 @@ const URL1 = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot
 const URL2 = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/${paramSymbol}?serietype=line`;
 
 function insertTheResultsToDom() {
-  console.log("the fetch data for the page ", getDataOut1);
-  console.log("price " + getDataOut1["profile"]["price"]);
-  companyPrice.innerHTML += getDataOut1["profile"]["price"];
-  companyName.innerHTML = getDataOut1["profile"]["companyName"];
+  companyPrice.innerHTML += getDataOut1.profile.price;
+  companyName.innerHTML = `${getDataOut1.profile.companyName} (${paramSymbol})`;
   companyDescription.innerHTML = getDataOut1["profile"]["description"];
-  companyWebsite.innerHTML = getDataOut1["profile"]["website"];
-  companyImage.src = getDataOut1["profile"]["image"];
-  companyImage.alt = getDataOut1["profile"]["companyName"];
+  companyWebsite.innerHTML = `<a href=${getDataOut1.profile.website} ><button type="button" class="btn btn-outline-secondary btn-sm">visit their website</button></a>` 
+  companyImage.src = getDataOut1.profile.image;
+  companyImage.alt = getDataOut1.profile.companyName;
   companyChangesPercentage.innerHTML = `(${getDataOut1["profile"]["changesPercentage"]})`;
   //בדוק את הערך בפונקציה
-  TakeValueToColorFunction = getDataOut1["profile"]["changesPercentage"];
+  TakeValueToColorFunction = getDataOut1.profile.changesPercentage;
   ChangesPercentageCOLOR(TakeValueToColorFunction);
 }
 
-// function insertTheChartToDom() {
-//   console.log(" chart data :", getDataOutForChart);
-//   console.log( getDataOutForChart["historical"][0].close);
-// }
-
 //אם חיובי - ירוק, אם שלילי אדום
 function ChangesPercentageCOLOR() {
-  console.log("green or red??");
-
   if (TakeValueToColorFunction > 0) {
-    console.log(TakeValueToColorFunction + " is positive --> make it green");
     companyChangesPercentage.classList.add("positiveValue");
   } else {
-    console.log(TakeValueToColorFunction + " is negative --> make it red");
     companyChangesPercentage.classList.add("negativeValue");
   }
 }
@@ -86,16 +73,13 @@ async function fetch1(URL) {
 
 //URL 1 is for the main company page and  URL2 is for the chart
 fetch1(URL1).then((todos) => {});
-
 fetch1(URL2).then((todos) => {});
-
 // chart3
 let myChart = document.getElementById("myChart").getContext("2d");
 
 function doMeAChartSir() {
-  console.log(" chart data :", getDataOutForChart);
-  console.log(getDataOutForChart["historical"][0].close);
-  console.log(getDataOutForChart["symbol"]);
+  // console.log(" chart data :", getDataOutForChart);
+  // console.log(getDataOutForChart["symbol"]);
 
   // Global Options
   // Chart.defaults.global.defaultFontFamily = 'Lato';
@@ -123,7 +107,6 @@ function doMeAChartSir() {
       datasets: [
         {
           // label:'Population',
-
           data: [
             getDataOutForChart["historical"][11].close,
             getDataOutForChart["historical"][10].close,

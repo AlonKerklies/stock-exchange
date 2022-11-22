@@ -20,59 +20,22 @@
   </head>
   <body>
     <div class="container mt-5 shadow-lg p-5 bg-white rounded">
-      <div class="d-flex align-items-center mb-5">
+      <div class="d-flex align-items-center mb-1">
         <img id="company-image" class="me-4" />
         <h2 id="company-name" class="h5. text-end"></h2>
       </div>
       <span id="company-price">Stock price: $</span>
       <span id="company-changesPercentage"></span>
-      <p class="mb-5 mt-5" id="company-description"></p>
+      <p class="mb-4 mt-5" id="company-description"></p>
 
       <div class="make-me-flexy"></div>
-      <p id="company-website"></p>
+      <p id="company-website"  class="mb-5  "></p>
 
       <!-- chart3 -->
       <div class="container">
         <canvas id="myChart"></canvas>
       </div>
-
-      <!-- end cahrt 3 -->
-
-      <!-- chart no2 -->
-
-      <!-- chart 2 end -->
-
-      <!-- start chart -->
-      <!-- <div>
-  <canvas id="myChart"></canvas>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-  const ctx = document.getElementById('myChart');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange' ],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3, ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-</script>
-  -->
-      <!-- end chart -->
+ 
     </div>
  
     <script
